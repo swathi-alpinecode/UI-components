@@ -1,4 +1,4 @@
-import { Title, Wrapper } from "./styledcomponent";
+import { Title, Wrapper } from "@/styles/styledcomponent";
 
 const Footer = () => {
   return (

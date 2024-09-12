@@ -1,5 +1,5 @@
+import { Title, Wrapper } from "@/styles/styledcomponent";
 import { ReactElement } from "react";
-import { Title, Wrapper } from "./styledcomponent";
 
 const Header = () => {
   return (
