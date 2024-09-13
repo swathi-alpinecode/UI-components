@@ -28,9 +28,10 @@ export const Table = styled.table`
   font-family: "Arial";
   border-collapse: separate;
   border-spacing: 0;
-  margin: 15px;
+  margin: 1%;
   border: 1px solid #d9dcdc;
   border-radius: 30px;
+  overflow-x: auto;
 
   tr:first-child td:first-child {
     border-top-left-radius: 30px;
@@ -58,7 +59,7 @@ export const TableHeaders = styled.th`
   font-size: 14px;
   text-align: left;
   height: 10px;
-  padding: 2rem;
+  padding: 2%;
 `;
 
 export const TableData = styled.td`
@@ -67,7 +68,7 @@ export const TableData = styled.td`
   font-size: 17px;
   width: 10%;
   height: 3em;
-  padding: 2rem;
+  padding: 2%;
 `;
 export const HorizontalLine = styled.hr`
   border-bottom: 0.5px solid #d9dcdc;
