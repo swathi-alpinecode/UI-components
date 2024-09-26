@@ -1,0 +1,56 @@
+export const dataObject = {
+  data: {
+    data: [
+      {
+        studentid: "E04",
+        studentname: "Bob Brown",
+        courseid: 101,
+        coursename: "Computer Science",
+        facultyid: 201,
+      },
+      {
+        studentid: "E01",
+        studentname: "John Doe",
+        courseid: 101,
+        coursename: "Computer Science",
+        facultyid: 201,
+      },
+      {
+        studentid: "E05",
+        studentname: "Emily Davis",
+        courseid: 102,
+        coursename: "Mathematics",
+        facultyid: 202,
+      },
+      {
+        studentid: "E02",
+        studentname: "Jane Smith",
+        courseid: 102,
+        coursename: "Mathematics",
+        facultyid: 202,
+      },
+      {
+        studentid: "E03",
+        studentname: "Alice Johnson",
+        courseid: 103,
+        coursename: "Physics",
+        facultyid: 203,
+      },
+    ],
+    NameOfTheTables: ["student", "course", "course_faculty"],
+    NameOfTheColumns: [
+      "student.studentid",
+      "student.courseid",
+      "student.studentname",
+      "course.courseid",
+      "course.facultyid",
+      "course.coursename",
+      "course_faculty.courseid",
+      "course_faculty.facultyid",
+    ],
+    PrimaryTable: "student",
+    countOfTables: 3,
+  },
+  message: "Success",
+  status: true,
+};

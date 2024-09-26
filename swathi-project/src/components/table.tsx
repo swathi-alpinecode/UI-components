@@ -6,6 +6,7 @@ import {
   TableData,
   TableHeaders,
 } from "@/styles/styledcomponent";
+import { useEffect, useState } from "react";
 
 // interface TableData {
 //   request: string;
@@ -16,13 +17,13 @@ import {
 //   created: string;
 //   assignees: string;
 // }
-// interface Data {
-//   studentid: number;
-//   studentname: string;
-//   courseid: number;
-//   coursename: string;
-//   facultyid: number;
-// }
+interface Data {
+  studentid: number;
+  studentname: string;
+  courseid: number;
+  coursename: string;
+  facultyid: number;
+}
 interface JsonData {
   data: Array<any>;
   NameOfTheTables: Array<string>;
@@ -30,40 +31,47 @@ interface JsonData {
   PrimaryTable: string;
   countOftables: number;
 }
+interface ResponceJson {
+  data: JsonData;
+  message: string;
+  status: boolean;
+}
 const CustomeTable = () => {
+  const [data1, setData1] = useState<Data[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const dataObject = {
     data: {
       data: [
         {
-          studentid: 4,
+          studentid: "E04",
           studentname: "Bob Brown",
           courseid: 101,
           coursename: "Computer Science",
           facultyid: 201,
         },
         {
-          studentid: 1,
+          studentid: "E01",
           studentname: "John Doe",
           courseid: 101,
           coursename: "Computer Science",
           facultyid: 201,
         },
         {
-          studentid: 5,
+          studentid: "E05",
           studentname: "Emily Davis",
           courseid: 102,
           coursename: "Mathematics",
           facultyid: 202,
         },
         {
-          studentid: 2,
+          studentid: "E02",
           studentname: "Jane Smith",
           courseid: 102,
           coursename: "Mathematics",
           facultyid: 202,
         },
         {
-          studentid: 3,
+          studentid: "E03",
           studentname: "Alice Johnson",
           courseid: 103,
           coursename: "Physics",
@@ -88,7 +96,6 @@ const CustomeTable = () => {
     status: true,
   };
   const headers1 = dataObject.data.NameOfTheColumns;
-  console.log(headers1);
   const convertedColumns = new Set(
     headers1.map((column) => column.split(".")[1])
   );
@@ -100,7 +107,26 @@ const CustomeTable = () => {
     capitalizeFirstLetter(char)
   );
 
-  console.log(FinalColumnsList);
+  const FetchData = async () => {
+    try {
+      const response = await fetch("/api/blog", {
+        method: "GET",
+        headers: {
+          "Cache-Control": "no-cache",
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Faild to fetch data");
+      }
+      const jsonData: ResponceJson = await response.json();
+      setData1(jsonData.data.data);
+    } catch (error) {
+      console.log(error, "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const data2 = dataObject.data.data;
   //   const headers = [
   //     "REQUEST",
@@ -158,32 +184,44 @@ const CustomeTable = () => {
   //       assignees: "Swathi",
   //     },
   //   ];
-
-  return (
-    <Container>
-      <TableContainer>
-        <h1 style={{ padding: "2rem" }}>Pull Request - Review Pending</h1>
-        <Table>
-          <thead>
-            {FinalColumnsList.map((head: Object) => (
-              <TableHeaders>{Object.values(head)}</TableHeaders>
-            ))}
-          </thead>
-          <tbody>
-            {data2.map((data: any, index) => (
-              <tr key={index}>
-                {FinalColumnsList.map((head: Object) => {
-                  const columnName = Object.keys(head)[0];
-                  console.log(columnName);
-
-                  return <TableData>{data[columnName]}</TableData>;
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </TableContainer>
-    </Container>
-  );
+  console.log(data1, "data1");
+  if (!data1) {
+    return (
+      <div>
+        <button onClick={FetchData}>click</button>
+        <p>Loading....</p>;
+      </div>
+    );
+  } else {
+    return (
+      <Container>
+        <button onClick={FetchData}>click</button>
+        <TableContainer>
+          <h1 style={{ padding: "2rem" }}>Pull Request - Review Pending</h1>
+          <Table>
+            <thead>
+              <TableHeaders>{"S No"}</TableHeaders>
+              {FinalColumnsList.map((head: Object) => (
+                <TableHeaders>{Object.values(head)}</TableHeaders>
+              ))}
+            </thead>
+            <tbody>
+              {data1.map((data: any, index) => (
+                <tr key={index}>
+                  <TableData>{index + 1}</TableData>
+                  {FinalColumnsList.map((head: Object, index: any) => {
+                    const columnName = Object.keys(head)[0];
+                    return (
+                      <TableData key={index}>{data[columnName]}</TableData>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </TableContainer>
+      </Container>
+    );
+  }
 };
 export default CustomeTable;
